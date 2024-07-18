@@ -13,7 +13,7 @@ import com.flipkart.bean.*;
  */
 public class GymOwnerFlipfitMenu {
 	public static void login(String email, String password) {
-		userServiceInterface owner = new userService();
+		userServiceInterface userService = new userService();
 		boolean isValid = owner.authenticateUser(email, password);
 
 		if (isValid) {
@@ -24,7 +24,6 @@ public class GymOwnerFlipfitMenu {
 
 	public static void showCenterOwnerOptions(String ownerId)
 	{
-		centerOwnerServiceInterface owner=new centerOwnerService();
 		Scanner in=new Scanner(System.in);
 		boolean flag=true;
 		do {
@@ -39,10 +38,10 @@ public class GymOwnerFlipfitMenu {
 					+"\n8. Exit");
 			
 			int choice=in.nextInt();
-			String gymId, newGymName,newGymLoc,loc,gymName,startTime,endTime;
+			String gymId, newGymName,newGymLoc,loc,gymName,startTime,endTime,name,phoneNumber,aadharNum,gstNum;
 			int slotCap,price;
-			
-			centerServiceInterface center=new centerService();
+			centerOwnerServiceInterface centerOwnerService=new centerOwnerService();
+			centerServiceInterface centerService=new centerService();
 			switch(choice)
 			{
 			case 1:
@@ -51,7 +50,7 @@ public class GymOwnerFlipfitMenu {
 				System.out.println("Enter gym location:");
 				loc=in.nextLine();
 				
-				owner.addCenter(gymName,loc);
+				centerOwnerService.addCenter(gymName,loc);
 				break;
 			case 2:
 				
@@ -62,12 +61,12 @@ public class GymOwnerFlipfitMenu {
 				System.out.println("Enter new location:");
 				newGymLoc=in.nextLine();
 				
-				center.setCenterDetails(gymId,newGymName,newGymLoc);
+				centerOwnerService.updateCenterDetails(gymId,newGymName,newGymLoc);
 				break;
 			case 3:
 				System.out.println("Enter gym id:");
 				gymId=in.nextLine();
-				Center c=center.getCenterDetails(gymId);
+				Center c=centerOwnerService.getCenterDetails(gymId);
 				System.out.println("Gym details are:");
 				System.out.println("Gym Name:"+c.getCenterName());
 				System.out.println("Gym Loc:"+c.getCenterLoc());
@@ -83,13 +82,13 @@ public class GymOwnerFlipfitMenu {
 				slotCap=in.nextInt();
 				System.out.println("Enter the price:");
 				price=in.nextInt();
-				owner.addSlot(gymName, startTime, endTime, slotCap, price);
+				centerOwnerService.addSlot(gymId, startTime, endTime, slotCap, price);
 				break;
 			
 			case 5:
 				System.out.println("Enter gym id");
 				gymId=in.nextLine();
-				List<Slot> allSlots=centerService.viewSlots();
+				List<Slot> allSlots=centerOwnerService.viewSlots(gymId);
 				
 				for(Slot s:allSlots)
 				{
@@ -97,26 +96,47 @@ public class GymOwnerFlipfitMenu {
 					System.out.println("Slot Id:"+s.getStartTime());
 					System.out.println("Slot Id:"+s.getEndTime());
 					if(s.getSlotStatus())
-					 System.out.println("Slot Id: Slot is Available");
+					 System.out.println("Slot Id: Slot is Available"); // we can also show all available slots at one place and same for unavailable slots.
 					else{
 						System.out.println("Slot Id: Slot is Unavailable");
 					}
 					
 				}
 				break;
-				
-				
-				
-			    
+			case 6:
+				System.out.println("Enter gym id");
+				gymId=in.nextLine();
+				List<List<String>> allBooking=centerOwnerService.viewAllBooking(gymId);
+//				for(Booking b:allBooking) // PrintList
+//				{
+//					System.out.println("Customer Id:"+b.getCustomerId());
+//					System.out.println("Center Id:"+b.getCenterId());
+//					System.out.println("Booking Id:"+b.getBookingId());
+//					System.out.println("Slot id:"+b.getSlotId());
+//				}
+				break;
+			case 7:
+				System.out.println("Enter your name");
+                name = in.nextLine();
+                System.out.println("Enter your contact number");
+                phoneNumber = in.nextLine();
+                System.out.println("Enter your aadhar Number");
+                aadharNum = in.next();
+                System.out.println("Enter your GST Number");
+                gstNum = in.next();
+                
+                centerOwnerService.editYourDetails(name,phoneNumber,aadharNum,gstNum);
+                break;
+			case 8:
+				System.out.println("Thank You for using Flipfit Application!");
+				flag=false;
+				break;
+			default:
+				System.out.println("Invalid Choice!");
 				
 			
-		}
-		
-			
-			
-			
-		}
+		}	
+		}while(flag);
 		
 	}
-
 }

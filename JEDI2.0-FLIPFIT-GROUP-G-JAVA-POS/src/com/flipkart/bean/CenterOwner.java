@@ -10,6 +10,7 @@ public class CenterOwner extends User {
 	private String ownerName;
 	private String contactNo;
 	private String aadharNo;
+	private String gstNo;
 
 	public String getOwnerName() {
 		return ownerName;
@@ -17,6 +18,14 @@ public class CenterOwner extends User {
 
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
+	}
+
+	public String getGstNo() {
+		return gstNo;
+	}
+
+	public void setGstNo(String gstNo) {
+		this.gstNo = gstNo;
 	}
 
 	public String getContactNo() {
