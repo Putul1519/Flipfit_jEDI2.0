@@ -1,6 +1,3 @@
-kjkt/**
- * 
- */
 package com.flipkart.bean;
 
 /**

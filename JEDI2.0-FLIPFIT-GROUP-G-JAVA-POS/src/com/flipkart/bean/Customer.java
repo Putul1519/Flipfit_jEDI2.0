@@ -27,13 +27,11 @@ public class Customer extends User {
 		this.gender = gender;
 	}
 	
-	public String getcustomerName() {
-		return gender;
-	}
-	
 	public void setcustomerName(String customerName) {
 		this.customerName=customerName;
 	}
-	
+	public String getcustomerName() {
+		return customerName;
+	}
 
 }

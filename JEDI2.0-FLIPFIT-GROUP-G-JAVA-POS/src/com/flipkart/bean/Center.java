@@ -1,20 +1,24 @@
-o/**
- * 
- */
 package com.flipkart.bean;
 
 /**
  * 
  */
 public class Center {
-	private String centerId;
+	private int centerId;
 	private String centerName;
 	private String centerLoc;
-	public String getCenterId() {
+	
+	 public Center(int centerId, String centerName, String centerLoc) {
+	        this.centerId = centerId;
+	        this.centerName = centerName;
+	        this.centerLoc = centerLoc;
+	    }
+	 
+	public int getCenterId() {
 		return centerId;
 	}
 
-	public void setCenterId(String centerId) {
+	public void setCenterId(int centerId) {
 		this.centerId = centerId;
 	}
 
