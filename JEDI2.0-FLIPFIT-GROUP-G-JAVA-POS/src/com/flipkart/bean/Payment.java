@@ -5,17 +5,18 @@ package com.flipkart.bean;
  */
 public class Payment {
     private int transcationId;
-    private String paymentDetails;
-    private String expDate;
-    private String modeOfPayment;
+    private String upiId;
+    private String paymentDate;
+    private int customerId;
+
 
 //  constructor
-    public Payment(int transcationId, String paymentDetails, String expDate, String mode
-          ) {
-       this.transcationId = transcationId;
-       this.paymentDetails = paymentDetails;
-       this.expDate = expDate;
-       this.modeOfPayment = mode;
+    public Payment(int transactionId, String upiId, String paymentDate, int customerId) {
+    	this.transcationId = transactionId;
+        this.upiId = upiId;
+        this.paymentDate = paymentDate;
+        this.customerId = customerId;
+     
     }
 
 
@@ -27,28 +28,34 @@ public class Payment {
        this.transcationId = transcationId;
     }
 
-    public String getPaymnetDetails() {
-       return paymentDetails;
-    }
 
-    public void setPaymnetDetails(String paymnetDetails) {
-       this.paymentDetails = paymnetDetails;
-    }
+	public String getUpiId() {
+		return upiId;
+	}
 
-    public String getExpDate() {
-       return expDate;
-    }
 
-    public void setExpDate(String expDate) {
-       this.expDate = expDate;
-    }
+	public void setUpiId(String upiId) {
+		this.upiId = upiId;
+	}
 
-    public String getModeOfPayment() {
-       return modeOfPayment;
-    }
 
-    public void setModeOfPayment(String modeOfPayment) {
-       this.modeOfPayment = modeOfPayment;
-    }
+	public String getPaymentDate() {
+		return paymentDate;
+	}
+
+
+	public void setPaymentDate(String paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
 
 }

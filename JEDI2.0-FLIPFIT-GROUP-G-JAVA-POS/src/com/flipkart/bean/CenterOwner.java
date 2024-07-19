@@ -10,27 +10,17 @@ public class CenterOwner{
 	private int userId; 
 	private int ownerId;
 	private boolean approvalStatus;
-	private String ownerName;
 	private String contactNo;
 	private String aadharNo;
 	private String gstNo;
 	
-	public CenterOwner(int userId, int ownerId, boolean approvalStatus, String ownerName, String contactNo, String aadharNo, String gstNo) {
+	public CenterOwner(int userId, int ownerId, boolean approvalStatus, String contactNo, String aadharNo, String gstNo) {
 		this.userId = userId;
 		this.ownerId = ownerId;
 	    this.approvalStatus = approvalStatus;
-	    this.ownerName = ownerName;
 	    this.contactNo = contactNo;
 	    this.aadharNo = aadharNo;
 	    this.gstNo = gstNo;		
-	}
-	
-	public String getOwnerName() {
-		return ownerName;
-	}
-
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
 	}
 
 	public String getGstNo() {

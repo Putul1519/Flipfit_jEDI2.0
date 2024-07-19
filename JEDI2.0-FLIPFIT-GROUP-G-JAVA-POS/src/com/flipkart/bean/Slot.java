@@ -9,18 +9,27 @@ package com.flipkart.bean;
 public class Slot {
     private String slotId;
     private boolean slotStatus;
-    private String StartTime;
+    private String startTime;
     private String endTime;
-    private int slotCapacity;
+    private int slotMaxCapacity;
     private int slotPrice;
+    private int slotCurrentCapacity;
+    private int centerId;
+    private String slotDate;
     
-    public Slot(String StartTime,String endTime,int slotCapacity,int price)
+    public Slot(String slotId, boolean slotStatus, String startTime, String endTime, 
+            int slotMaxCapacity, int slotPrice, int slotCurrentCapacity, 
+            int centerId, String slotDate)
     {
-       this.StartTime=StartTime;
-       this.endTime=endTime;
-       this.slotCapacity=slotCapacity;
-       this.slotPrice=price;
-       this.slotStatus=false;
+    	this.slotId = slotId;
+        this.slotStatus = slotStatus;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.slotMaxCapacity = slotMaxCapacity;
+        this.slotPrice = slotPrice;
+        this.slotCurrentCapacity = slotCurrentCapacity;
+        this.centerId = centerId;
+        this.slotDate = slotDate;
     }
 
     public int getSlotPrice() {
@@ -49,11 +58,11 @@ public class Slot {
 
 
     public String getStartTime() {
-       return StartTime;
+       return startTime;
     }
 
     public void setStartTime(String startTime) {
-       StartTime = startTime;
+       this.startTime = startTime;
     }
 
     public String getEndTime() {
@@ -64,12 +73,36 @@ public class Slot {
        this.endTime = endTime;
     }
 
-    public int getSlotCapacity() {
-       return slotCapacity;
-    }
+	public int getSlotMaxCapacity() {
+		return slotMaxCapacity;
+	}
 
-    public void setSlotCapacity(int slotCapacity) {
-       this.slotCapacity = slotCapacity;
-    }
+	public void setSlotMaxCapacity(int slotMaxCapacity) {
+		this.slotMaxCapacity = slotMaxCapacity;
+	}
+
+	public int getCenterId() {
+		return centerId;
+	}
+
+	public void setCenterId(int centerId) {
+		this.centerId = centerId;
+	}
+
+	public String getSlotDate() {
+		return slotDate;
+	}
+
+	public void setSlotDate(String slotDate) {
+		this.slotDate = slotDate;
+	}
+
+	public int getSlotCurrentCapacity() {
+		return slotCurrentCapacity;
+	}
+
+	public void setSlotCurrentCapacity(int slotCurrentCapacity) {
+		this.slotCurrentCapacity = slotCurrentCapacity;
+	}
 
 }
