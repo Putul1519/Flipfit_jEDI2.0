@@ -1,7 +1,7 @@
 package com.flipkart.exception;
 
 import java.io.InvalidObjectException;
-
+//
 public class InvalidChoiceException extends InvalidObjectException {
 
     private static final long serialVersionUID = 1L;

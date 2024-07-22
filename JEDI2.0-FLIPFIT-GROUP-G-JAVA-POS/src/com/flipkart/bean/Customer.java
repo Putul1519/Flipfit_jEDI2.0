@@ -21,6 +21,10 @@ public class Customer {
 		this.userId = userId;
 	}
 
+	/**
+	 * getters and setters
+	 */
+
 	public int getCustomerId() {
 		return customerId;
 	}

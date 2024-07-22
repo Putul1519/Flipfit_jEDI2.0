@@ -23,6 +23,9 @@ public class CenterOwner{
 	    this.gstNo = gstNo;		
 	}
 
+	/**
+	 * getters and setters
+	 */
 	public String getGstNo() {
 		return gstNo;
 	}

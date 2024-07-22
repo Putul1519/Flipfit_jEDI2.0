@@ -18,7 +18,9 @@ public class Booking  {
         this.bookingDate=bookingDate;
     }
 
-
+	/**
+	 * getters and setters
+	 */
 	public int getBookingId() {
 		return bookingId;
 	}

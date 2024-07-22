@@ -15,7 +15,10 @@ public class Center {
 	        this.centerName = centerName;
 	        this.centerLoc = centerLoc;
 	    }
-	 
+
+	/**
+	 * getters and setters
+	 */
 	public int getCenterId() {
 		return centerId;
 	}

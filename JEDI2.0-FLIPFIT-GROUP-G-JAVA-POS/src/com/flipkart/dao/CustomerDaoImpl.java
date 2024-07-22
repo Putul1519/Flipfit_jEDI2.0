@@ -13,7 +13,12 @@ import static com.flipkart.constant.SQLConstant.*;
 
 
 public class CustomerDaoImpl implements  CustomerDaoInterface {
-	
+	/**
+	 * Creates a new user.
+	 * @param userId
+	 * @param contactNo
+	 */
+
 	public void createUser(int userId,String contactNo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -31,11 +36,11 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 				customerId = rs.getInt("maxcustomerId") + 1;
 			
 			pstmt = con.prepareStatement(INSERT_CUSTOMER);
-			
+
 			pstmt.setInt(1, customerId);
 			pstmt.setInt(2, userId);
 			pstmt.setString(3, contactNo);
-			
+
 			int rowsInserted = pstmt.executeUpdate();
 			con.commit();
 
@@ -53,6 +58,11 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 	            }
 	       }
 	}
+	/**
+	 * Views all Centers.
+	 *
+	 * @return A list of all Centers.
+	 */
 	public List<Center> viewCenters(){
 		 Connection con = null;
 	        PreparedStatement stmt = null;
@@ -85,6 +95,12 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 	        }
 	        return gymList;
 	}
+	/**
+	 * Views all slots for a gym on a particular date.
+	 * @param gymId
+	 * @param date
+	 * @return A list of Slot objects.
+	 */
 	public List<Slot> viewSlots(int gymId,String date)throws GymNotFoundException{
 		    Connection con = null;
 	        PreparedStatement stmtSlots = null;
@@ -134,8 +150,12 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 
 	        return slotAvailability;
 	}
-	public List<Booking> viewPastBooking(int userId)
-	{
+	/**
+	 * Views all past bookings for a user.
+	 * @param userId
+	 * @return A list of Booking objects.
+	 */
+	public List<Booking> viewPastBooking(int userId) {
 		 Connection con = null;
 	        PreparedStatement stmt = null;
 	        ResultSet rs = null;
@@ -191,9 +211,13 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 
 	        return bookings;
 	}
-
-	public int makePayment(int userId,String paymentDetails) throws BookingFailedException
-	{
+	/**
+	 * Makes a payment for a user.
+	 * @param userId
+	 * @param paymentDetails
+	 * @return 1 if the payment is successful, 0 otherwise.
+	 */
+	public int makePayment(int userId,String paymentDetails) throws BookingFailedException {
 		Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -204,7 +228,7 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-      
+
             stmt = con.prepareStatement(SELECT_CUSTOMER_ID);
             stmt.setInt(1, userId);
             rs = stmt.executeQuery();
@@ -229,7 +253,17 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             stmt.setInt(4, custId);
 
             int result = stmt.executeUpdate();
-
+//            if (result > 0) {
+//           
+//                rs = stmt.getGeneratedKeys();
+//                if (rs.next()) {
+//                    transactionId = rs.getInt(1);
+//                    System.out.println("Generated transactionId: " + transactionId);
+//                }
+//                System.out.println("Payment successfully recorded.");
+//            } else {
+//                throw new BookingFailedException("Failed to record payment.");
+//            }
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -243,8 +277,14 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
         }
         return transactionId;
 	}
-
-	
+	/**
+	 * Creates a new booking.
+	 * @param userId
+	 * @param slotId
+	 * @param centerId
+	 * @param transactionId
+	 * @param bookingDate
+	 */
 	public void createBooking(int userId,int slotId,int centerId,int transactionId,String bookingDate) throws BookingFailedException{
 		Connection con = null;
         PreparedStatement stmt = null;
@@ -255,7 +295,7 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-            
+
             stmt=con.prepareStatement(SELECT_CUSTOMER_ID);
             stmt.setInt(1,userId);
             rs=stmt.executeQuery();
@@ -279,14 +319,14 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             	System.out.println("Slot is not available!");
             	return;
             }
-    
+
             stmt = con.prepareStatement(UPDATE_SLOT);
 			stmt.setInt(1, currCap+1);
 			stmt.setInt(2, slotId);
 			int rowsInserted =stmt.executeUpdate();
 
 			
-		
+
 			if(currCap==maxCap)
 			{
 
@@ -328,9 +368,12 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             }
         }
 	}
-	
-	public void deleteBooking(int userId,int bookingId)
-	{
+	/**
+	 * Deletes a booking.
+	 * @param userId
+	 * @param bookingId
+	 */
+	public void deleteBooking(int userId,int bookingId) {
 		Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -372,7 +415,7 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 			stmt.setInt(3, slotId);
 			int rowsInserted =stmt.executeUpdate();
 
-            
+
             stmt = con.prepareStatement(DELETE_BOOKING);
             stmt.setInt(1, bookingId);
             int result = stmt.executeUpdate();
@@ -391,6 +434,4 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
         }
 		
 	}
-	
-	
 }

@@ -1,6 +1,6 @@
 package com.flipkart.exception;
 
-
+// Exception to check if login failed
 public class LoginFailedException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

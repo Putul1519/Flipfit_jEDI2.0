@@ -13,6 +13,13 @@ import java.util.Date;
 import com.flipkart.bean.*;
 
 public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
+	/**
+	 * Creates a new owner.
+	 * @param userId
+	 * @param userPhoneNumber
+	 * @param ownerGstNo
+	 * @param aadharNo
+	 */
 	public void createOwner(int userId,String userPhoneNumber,String ownerGstNo,String aadharNo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -59,6 +66,12 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 	            }
 	       }
 	}
+	/**
+	 * Adds a new center.
+	 * @param centerName
+	 * @param centerLoc
+	 * @param userId
+	 */
 	public void addCenter(String centerName, String centerLoc, int userId) {
 
 		Connection con = null;
@@ -128,7 +141,12 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			}
 		}
 	}
-
+	/**
+	 * Updates the details of a center.
+	 * @param gymId
+	 * @param centerName
+	 * @param centerLoc
+	 */
 	public void updateCenterDetails(int gymId, String centerName, String centerLoc) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -171,7 +189,11 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 		}
 
 	}
-
+	/**
+	 * Retrieves the details of a center.
+	 * @param userId
+	 * @return A list of Center objects.
+	 */
 	public List<Center> getCenterDetails(int userId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -222,7 +244,14 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 		}
 		return centerList;
 	}
-
+	/**
+	 * Adds a new slot.
+	 * @param gymId
+	 * @param startTime
+	 * @param endTime
+	 * @param slotCap
+	 * @param price
+	 */
 	public void addSlot(int gymId, String startTime, String endTime, int slotCap,String price) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -282,10 +311,12 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			}
 		}		
 	}
-
-	
-    public List<Slot> viewSlots(int centerId)
-	{
+	/**
+	 * Retrieves all slots for a center.
+	 * @param centerId
+	 * @return
+	 */
+    public List<Slot> viewSlots(int centerId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -331,7 +362,16 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 		return slotList;
 
 	}
-	
+
+	/**
+	 * Edit your details.
+	 * @param userId
+	 * @param name
+	 * @param email
+	 * @param contactNo
+	 * @param aadharNo
+	 * @param gstnNo
+	 */
 	public void editYourDetails(int userId,String name,String email, String contactNo, String aadharNo, String gstnNo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -383,7 +423,11 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 		}
 		
 	}
-
+	/**
+	 * Retrieves all bookings for a center.
+	 * @param gymId
+	 * @return A list of Booking objects.
+	 */
 	public List<Booking> viewAllBooking(int gymId){
 		Connection con = null;
         PreparedStatement stmt = null;

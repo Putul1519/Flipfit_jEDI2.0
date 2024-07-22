@@ -33,6 +33,9 @@ public class Slot {
         this.slotDate = slotDate;
     }
 
+    /**
+     * getters and setters
+     */
     public String getSlotPrice() {
        return slotPrice;
     }

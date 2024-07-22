@@ -18,7 +18,9 @@ public class Payment {
         this.customerId = customerId;
      
     }
-
+	/**
+	 * getters and setters
+	 */
 
     public int getTranscationId() {
        return transcationId;
