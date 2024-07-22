@@ -33,7 +33,7 @@ public interface adminServiceInterface {
 	 * Approves a Center Owner's request.
 	 *
 	 * @param ownerId The ID of the Center Owner whose request is to be approved.
-	 */
+	 *
 	 * @return 1 if the request is approved, 0 otherwise.
 	 */
 	public int validateOwnerRequest(int ownerId);

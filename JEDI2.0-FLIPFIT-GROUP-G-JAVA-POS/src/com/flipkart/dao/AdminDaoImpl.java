@@ -6,6 +6,9 @@ import java.util.List;
 
 import com.flipkart.bean.Center;
 import com.flipkart.bean.CenterOwner;
+/**
+ * DAO for Admin
+ */
 
 public class AdminDaoImpl implements AdminDaoInterface {
 
@@ -151,7 +154,6 @@ public class AdminDaoImpl implements AdminDaoInterface {
 	 * Removes a Center Owner.
 	 *
 	 * @param ownerId The ID of the Center Owner to be removed.
-	 * @return 1 if the owner is removed, 0 otherwise.
 	 */
 	public void removeGymOwner(int ownerId) {
 
