@@ -42,7 +42,6 @@ public interface adminServiceInterface {
 	 * Removes a Center Owner.
 	 *
 	 * @param ownerId The ID of the Center Owner to be removed.
-	 * @return 1 if the owner is removed, 0 otherwise.
 	 */
 	public void removeGymOwner(int ownerId);
 }
