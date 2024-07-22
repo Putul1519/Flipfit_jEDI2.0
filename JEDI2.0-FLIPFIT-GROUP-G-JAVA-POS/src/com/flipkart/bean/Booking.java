@@ -6,16 +6,18 @@ public class Booking  {
 	private int centerId;
 	private int slotId;
 	private int transactionId;
-	private int bookingAmount;
+	private String bookingAmount;
+	private String bookingDate;
 	
 	//constructor
-	public Booking(int bookingId, int customerId, int centerId, int slotId, int transactionId, int bookingAmount) {
+	public Booking(int bookingId, int customerId, int centerId, int slotId, int transactionId, String bookingAmount,String bookingDate) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.centerId = centerId;
         this.slotId = slotId;
         this.transactionId = transactionId;
         this.bookingAmount = bookingAmount;
+        this.bookingDate=bookingDate;
     }
 
 
@@ -59,12 +61,22 @@ public class Booking  {
 		this.transactionId = transactionId;
 	}
 
-	public int getBookingAmount() {
+	public String getBookingAmount() {
 		return bookingAmount;
 	}
 
-	public void setBookingAmount(int bookingAmount) {
+	public void setBookingAmount(String bookingAmount) {
 		this.bookingAmount = bookingAmount;
+	}
+
+
+	public String getBookingDate() {
+		return bookingDate;
+	}
+
+
+	public void setBookingDate(String bookingDate) {
+		this.bookingDate = bookingDate;
 	}
 
 }

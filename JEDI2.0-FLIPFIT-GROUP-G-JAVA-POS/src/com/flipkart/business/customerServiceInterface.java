@@ -2,16 +2,14 @@ package com.flipkart.business;
 import com.flipkart.bean.*;
 import java.util.*;
 public interface customerServiceInterface {
-	public List<Center> viewCenter();
+	public void createCustomer(int userId, String contactNo);
+	public List<Center> viewCenters();
+	public List<Slot> viewSlots(int gymId,String date);
+	public List<Booking> viewPastBooking(int userId);
 	
-	public List<Booking> viewPastBooking(String custId);
+	public int makePayment(int userId,String paymentDetails);
 	
-	public List<Slot> viewSlots(String centerId);
-	
-	public String addBooking(String custId, String centerId, String slotId); // Return booking id & also implements slot selection here
-	
-	public String updateBooking(String custId, String centerId, String bookingId);
-	
-	public boolean deleteBooking(String custId, String centerId, String bookingId);
+	public void createBooking(int userId,int slotId,int gymBookingId,int transactionId,String bookingDate);
+	public void deleteBooking(int userId,int bookingId);
 
 }

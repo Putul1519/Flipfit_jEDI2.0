@@ -5,15 +5,17 @@ import java.util.*;
 import com.flipkart.bean.*;
 
 public interface adminServiceInterface {
-
+	public List<Center> viewCenters();
+	
 	public List<CenterOwner> viewRequest();
+	
+	public List<CenterOwner> viewAllCenterOwners();
 
-	public boolean validateOwnerRequest(String ownerId);
+	public int validateOwnerRequest(int ownerId);
 
-	public List<Center> viewCenterdetails(String centerId);
+	
 
-	public void removeGymOwner(String ownerId);
+	public void removeGymOwner(int ownerId);
 
-	public List<Customer> viewCustomerDetails(String custId);
 
 }

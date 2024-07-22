@@ -7,18 +7,19 @@ package com.flipkart.bean;
  * 
  */
 public class Slot {
-    private String slotId;
-    private boolean slotStatus;
+    private int slotId;
+    private int slotStatus;
     private String startTime;
     private String endTime;
     private int slotMaxCapacity;
-    private int slotPrice;
+    private String slotPrice;
     private int slotCurrentCapacity;
     private int centerId;
     private String slotDate;
+ 
     
-    public Slot(String slotId, boolean slotStatus, String startTime, String endTime, 
-            int slotMaxCapacity, int slotPrice, int slotCurrentCapacity, 
+    public Slot(int slotId, int slotStatus, String startTime, String endTime, 
+            int slotMaxCapacity, String slotPrice, int slotCurrentCapacity, 
             int centerId, String slotDate)
     {
     	this.slotId = slotId;
@@ -32,27 +33,27 @@ public class Slot {
         this.slotDate = slotDate;
     }
 
-    public int getSlotPrice() {
+    public String getSlotPrice() {
        return slotPrice;
     }
 
-    public void setSlotPrice(int slotPrice) {
+    public void setSlotPrice(String slotPrice) {
        this.slotPrice = slotPrice;
     }
 
-    public String getSlotId() {
+    public int getSlotId() {
        return slotId;
     }
 
-    public void setSlotId(String slotId) {
+    public void setSlotId(int slotId) {
        this.slotId = slotId;
     }
 
-    public void setSlotStatus(boolean slotStatus) {
+    public void setSlotStatus(int slotStatus) {
        this.slotStatus = slotStatus;
     }
     
-    public boolean getSlotStatus() {
+    public int getSlotStatus() {
        return slotStatus;
     }
 

@@ -9,12 +9,12 @@ package com.flipkart.bean;
 public class CenterOwner{
 	private int userId; 
 	private int ownerId;
-	private boolean approvalStatus;
+	private int approvalStatus;
 	private String contactNo;
 	private String aadharNo;
 	private String gstNo;
 	
-	public CenterOwner(int userId, int ownerId, boolean approvalStatus, String contactNo, String aadharNo, String gstNo) {
+	public CenterOwner(int userId, int ownerId, int approvalStatus, String contactNo, String aadharNo, String gstNo) {
 		this.userId = userId;
 		this.ownerId = ownerId;
 	    this.approvalStatus = approvalStatus;
@@ -63,12 +63,12 @@ public class CenterOwner{
 		this.ownerId = ownerId;
 	}
 
-	public boolean getApprovalStatus() {
+	public int getApprovalStatus() {
 		return approvalStatus;
 		
 	}
 
-	public void setApprovalStatus(boolean approvalStatus) {
+	public void setApprovalStatus(int approvalStatus) {
 		this.approvalStatus = approvalStatus;
 	}
 

@@ -2,18 +2,18 @@
  * 
  */
 package com.flipkart.business;
+import com.flipkart.dao.*;
 
 /**
  * 
  */
 public class userService implements userServiceInterface {
-	public int registerUser(String userName, String userPass, String userEmail, String userRole) {
-		int userId = 0;
-		return userId;
+	UserDaoInterface userDao=new UserDaoImpl();
+	public int authenticateUser(String email, String pass,int roleId) {
+		return userDao.authenticateUser(email, pass, roleId);
 	}
-
-	public boolean authenticateUser(String email, String pass) {
-		return true;
+	public int createUser(String name,String email,String password,int roleId) {
+		return userDao.createUser(name,email,password,roleId);
 	}
 
 }

@@ -2,6 +2,7 @@
  * 
  */
 package com.flipkart.business;
+import com.flipkart.dao.*;
 
 import java.util.*;
 
@@ -11,52 +12,43 @@ import com.flipkart.bean.*;
  * 
  */
 public class centerOwnerService implements centerOwnerServiceInterface{
+	CenterOwnerDaoInterface ownerDao=new CenterOwnerDaoImpl();
 	
-	public void addCenter(String centerName, String centerLoc) {
-		Center cen=new Center();
-		cen.setCenterName(centerName);
-		cen.setCenterLoc(centerLoc);
-		centerServiceInterface center=new centerService();
-		center.setCenterDetails(cen);
-		
+	public void createOwner(int userId,String userPhoneNumber,String ownerGstNo,String aadharNo) {
+		ownerDao.createOwner(userId,userPhoneNumber,ownerGstNo,aadharNo);
 	}
 	
-	public void updateCenterDetails(String gymId,String gymName, String gymLoc)
-	{
-		// Fetch the data from DB and change it.
-		
-	}
-	public Center getCenterDetails(String gymId)
-	{
-		// Fetch the data and return the Center object
-		Center c=new Center();
-		return c;
-	}
-	public void addSlot(String gymId, String startTime, String endTime, int slotCap,int price)
-	{
-//		Slot s= new Slot(startTime,endTime,slotCap,price);
-//		// fetch last slod id and increment it by +1;
-//		String id=0;
-//		s.setSlotId(id);
-		// Insert into slot table
-		
-		
-	}
-	public List<Slot> viewSlot(String gymId)
-	{
-		// Fetch all the rows from slot table for the above gymId and convert each row into slot object
-		// merge all the slot objects into a list and return it.
-	}
-	public List<List<String>> viewAllBooking(String gymId) // try using 2D matrix
-	{
-		// Fetch all the rows from booking, slot, customer and center tables for the above gymId and convert each row into slot object
-		// merge all the slot objects into a list and return it.
-	}
-	public void editYourDetails(String name,String contactNo,String aadharNo,String gstnNo)
-	{
-		// write update query to update the details of the customer table
+	public void addCenter(String centerName, String centerLoc,int ownerId) {
+		ownerDao.addCenter(centerName, centerLoc, ownerId);
+		System.out.println("Gym Registered!");
 	}
 	
-	
-
+	public void updateCenterDetails(int gymId,String gymName, String gymLoc)
+	{
+		ownerDao.updateCenterDetails(gymId, gymName, gymLoc);
+		System.out.println("Update Successfull!");
+		
+	}
+	public List<Center> getCenterDetails(int gymId)
+	{
+		return ownerDao.getCenterDetails(gymId);
+	}
+	public void addSlot(int gymId, String startTime, String endTime, int slotCap,String price)
+	{
+		ownerDao.addSlot(gymId,startTime,endTime,slotCap,price);
+		System.out.println("Slot Added!");
+		
+	}
+	public List<Slot> viewSlots(int centerId)
+	{
+		return ownerDao.viewSlots(centerId);
+	}
+	public List<Booking> viewAllBooking(int gymId) // try using 2D matrix
+	{
+		return ownerDao.viewAllBooking(gymId);
+	}
+	public void editYourDetails(int ownerId,String name,String email,String contactNo,String aadharNo,String gstnNo)
+	{
+		ownerDao.editYourDetails(ownerId, name, email, contactNo, aadharNo, gstnNo);
+	}
 }

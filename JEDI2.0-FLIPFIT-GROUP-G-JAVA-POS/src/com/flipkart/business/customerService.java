@@ -3,7 +3,9 @@
  */
 package com.flipkart.business;
 
+import java.util.HashMap;
 import java.util.List;
+import com.flipkart.dao.*;
 
 import com.flipkart.bean.*;
 
@@ -11,25 +13,44 @@ import com.flipkart.bean.*;
  * 
  */
 public class customerService implements customerServiceInterface {
-	public List<Center> viewCenter(){
-		
+	CustomerDaoInterface customerDao=new CustomerDaoImpl();
+	public void createCustomer(int userId, String contactNo) {
+		customerDao.createUser(userId, contactNo);
 	}
-	public List<Booking> viewPastBooking(String custId){
-		
+	public List<Center> viewCenters(){
+		return customerDao.viewCenters();		
 	}
-	public List<Slot> viewSlots(String centerId){
-		
+	public List<Slot> viewSlots(int gymId,String date){
+		try {
+		  return customerDao.viewSlots(gymId, date);
+		}
+		catch(Exception e){
+			System.out.println("Error:"+e.getMessage());
+		}
+		return null;
 	}
-	public String addBooking(String custId, String centerId, String slotId) {
-		
+	public List<Booking> viewPastBooking(int userId)
+	{
+		return customerDao.viewPastBooking(userId);
 	}
-	
-	public String updateBooking(String custId, String centerId, String bookingId) {
-		
+	public int makePayment(int userId,String paymentDetails) {
+		try {
+		return customerDao.makePayment(userId,paymentDetails);
+		}catch(Exception e) {
+			System.out.println("Error:"+e.getMessage());
+		}
+		return 0;
 	}
-	
-	public boolean deleteBooking(String custId, String centerId, String bookingId) {
-		
+	public void createBooking(int userId,int slotId,int gymBookingId,int transactionId,String bookingDate) {
+		try {
+		customerDao.createBooking(userId,slotId,gymBookingId,transactionId,bookingDate);
+		}catch(Exception e) {
+			System.out.println("Error:"+e.getMessage());
+		}
 	}
+	public void deleteBooking(int userId,int bookingId) {
+		customerDao.deleteBooking(userId,bookingId);
+	}
+
 
 }

@@ -3,6 +3,7 @@
  */
 package com.flipkart.business;
 
+import com.flipkart.dao.*;
 import java.util.List;
 
 import com.flipkart.bean.Center;
@@ -13,24 +14,38 @@ import com.flipkart.bean.Customer;
  * 
  */
 public class adminService implements adminServiceInterface {
+	AdminDaoInterface adminDao = new AdminDaoImpl();
+	public List<Center> viewCenters() {
+		List<Center> centers = adminDao.viewCenters();
+		return centers;
+
+	}
+
+	
 
 	public List<CenterOwner> viewRequest() {
+		List<CenterOwner> requests = adminDao.viewRequest();
+		return requests;
 
 	}
 
-	public boolean validateOwnerRequest(String ownerId) {
+	public List<CenterOwner> viewAllCenterOwners() {
+		
+		List<CenterOwner> centerOwners = adminDao.viewAllCenterOwners();
+		return centerOwners;
+	}
+
+	public int validateOwnerRequest(int ownerId) {
+		int isValidated = adminDao.validateOwnerRequest(ownerId);
+		
+		return isValidated;
 
 	}
 
-	public List<Center> viewCenterdetails(String centerId) {
+	public void removeGymOwner(int ownerId) {
 
-	}
-
-	public void removeGymOwner(String ownerId) {
-
-	}
-
-	public List<Customer> viewCustomerDetails(String custId) {
+		adminDao.removeGymOwner(ownerId);
+		
 
 	}
 
