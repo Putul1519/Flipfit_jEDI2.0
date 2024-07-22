@@ -1,1 +1,6 @@
+com.flipkart.app
+com.flipkart.bean
 com.flipkart.business
+com.flipkart.constant
+com.flipkart.dao
+com.flipkart.exception

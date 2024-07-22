@@ -38,11 +38,11 @@ public interface centerOwnerServiceInterface {
 	public List<Center> getCenterDetails(int gymId);
 	/**
 	 * Adds a new slot.
-	 * @param gymId
+	 * @param centerId
 	 * @param startTime
 	 * @param endTime
-	 * @param slotCap
-	 * @param price
+	 * @param slotCapacity
+	 * @param slotPrice
 	 */
 	public void addSlot(int centerId, String startTime, String endTime, int slotCapacity, String slotPrice);
 	/**
