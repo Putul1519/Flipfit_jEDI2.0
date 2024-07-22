@@ -3,18 +3,17 @@ import com.flipkart.bean.*;
 import com.flipkart.bean.Slot;
 import com.flipkart.exception.BookingFailedException;
 import com.flipkart.exception.GymNotFoundException;
-
+import static com.flipkart.constant.SQLConstant.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+import static com.flipkart.constant.SQLConstant.*;
 
-/**
- * Implementation of the FlipFitCustomerDAOInterface that handles customer operations related to gyms and slots.
- */
+
 public class CustomerDaoImpl implements  CustomerDaoInterface {
+	
 	public void createUser(int userId,String contactNo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -26,26 +25,20 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
-
-			String sql = "SELECT MAX(customerId) AS maxcustomerId FROM Customer";
-			pstmt = con.prepareStatement(sql);
-
-			// Execute query
+			pstmt = con.prepareStatement(SELECT_MAX_CUSTOMERID);
 			rs = pstmt.executeQuery();
 			if (rs.next())
 				customerId = rs.getInt("maxcustomerId") + 1;
 			
-			sql = "INSERT INTO Customer VALUES (?,?,?)";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(INSERT_CUSTOMER);
 			
-			// Set parameters for PreparedStatement
 			pstmt.setInt(1, customerId);
 			pstmt.setInt(2, userId);
 			pstmt.setString(3, contactNo);
-			// Execute the insert statement
+			
 			int rowsInserted = pstmt.executeUpdate();
 			con.commit();
-//			System.out.println(rowsInserted + " Customer record inserted");
+
 		}
 	        catch (Exception e) {
 	            System.out.println("Error Customer: " + e.getMessage());
@@ -70,8 +63,7 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 	            con = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 
-	            String query = "SELECT * FROM Center";
-	            stmt = con.prepareStatement(query);
+	            stmt = con.prepareStatement(SELECT_CENTER);
 	            rs = stmt.executeQuery();
 	            while (rs.next()) {
 	                int gymId = rs.getInt("centerId");
@@ -107,8 +99,7 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 	            con = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 
-	            String querySlots = "SELECT * FROM Slot WHERE centerId=?";
-	            stmtSlots = con.prepareStatement(querySlots);
+	            stmtSlots = con.prepareStatement(SELECT_SLOT);
 	            stmtSlots.setInt(1, gymId);
 	            rsSlots = stmtSlots.executeQuery();
 
@@ -156,9 +147,7 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 	            con = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 
-	            // First, get the customerId from the userId
-	            String customerQuery = "SELECT customerId FROM Customer WHERE userId = ?";
-	            stmt = con.prepareStatement(customerQuery);
+	            stmt = con.prepareStatement(SELECT_CUSTOMERID);
 	            stmt.setInt(1, userId);
 	            rs = stmt.executeQuery();
 
@@ -167,15 +156,13 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 	                customerId = rs.getInt("customerId");
 	            } else {
 	                System.out.println("No customer found with userId: " + userId);
-	                return bookings; // return empty list if no customer found
+	                return bookings;
 	            }
 
 	            rs.close();
 	            stmt.close();
 
-	            // Now, get all bookings for the customerId
-	            String bookingQuery = "SELECT * FROM booking WHERE customerId = ?";
-	            stmt = con.prepareStatement(bookingQuery);
+	            stmt = con.prepareStatement(SELECT_BOOKING_CUSTOMERID);
 	            stmt.setInt(1, customerId);
 	            rs = stmt.executeQuery();
 	            
@@ -217,9 +204,8 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-            
-            String sql="Select customerId as custId from Customer where userId=?";
-            stmt = con.prepareStatement(sql);
+      
+            stmt = con.prepareStatement(SELECT_CUSTOMER_ID);
             stmt.setInt(1, userId);
             rs = stmt.executeQuery();
             if (rs.next()) {
@@ -230,33 +216,20 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             String date = currentDate.format(formatter);
             
-            sql = "SELECT MAX(transactionId) AS maxTransactionId FROM Payment";
-            stmt = con.prepareStatement(sql);
+            stmt = con.prepareStatement(SELECT_TRANSACTION_ID);
 
-			// Execute query
 			rs = stmt.executeQuery();
 			if (rs.next())
 				transactionId = rs.getInt("maxTransactionId") + 1;
 			
-            String query = "INSERT INTO Payment VALUES (?,?,?,?)";
-            stmt = con.prepareStatement(query);
+            stmt = con.prepareStatement(INSERT_PAYMENT);
             stmt.setInt(1, transactionId);
             stmt.setString(2, paymentDetails);
             stmt.setString(3, date);
             stmt.setInt(4, custId);
 
             int result = stmt.executeUpdate();
-//            if (result > 0) {
-//           
-//                rs = stmt.getGeneratedKeys();
-//                if (rs.next()) {
-//                    transactionId = rs.getInt(1);
-//                    System.out.println("Generated transactionId: " + transactionId);
-//                }
-//                System.out.println("Payment successfully recorded.");
-//            } else {
-//                throw new BookingFailedException("Failed to record payment.");
-//            }
+
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -282,16 +255,16 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-            String sql="Select customerId as custId from Customer where userId=?";
-            stmt=con.prepareStatement(sql);
+            
+            stmt=con.prepareStatement(SELECT_CUSTOMER_ID);
             stmt.setInt(1,userId);
             rs=stmt.executeQuery();
             if(rs.next())
             {
             	custId=rs.getInt("custId");
             }
-            sql="Select * from Slot where slotId=?";
-            stmt = con.prepareStatement(sql);
+
+            stmt = con.prepareStatement(SELECT_SLOTID);
             stmt.setInt(1, slotId);
             rs = stmt.executeQuery();
             if (rs.next()) {
@@ -306,19 +279,18 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             	System.out.println("Slot is not available!");
             	return;
             }
-            // Update slot table
-            sql="UPDATE Slot SET slotCurrCap=? where slotId=?";
-            stmt = con.prepareStatement(sql);
+    
+            stmt = con.prepareStatement(UPDATE_SLOT);
 			stmt.setInt(1, currCap+1);
 			stmt.setInt(2, slotId);
 			int rowsInserted =stmt.executeUpdate();
-//			System.out.println(rowsInserted + " record inserted");
+
 			
-			// Change slot Status
+		
 			if(currCap==maxCap)
 			{
-				sql="UPDATE Slot SET slotStatus=? where slotId=?";
-		        stmt = con.prepareStatement(sql);
+
+		        stmt = con.prepareStatement(UPDATE_SLOT_2);
 				stmt.setInt(1,1);
 				stmt.setInt(2, slotId);
 				rowsInserted =stmt.executeUpdate();
@@ -326,17 +298,13 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
 				
 			}
             
-            
-            sql = "SELECT MAX(bookingId) AS maxBookingId FROM Booking";
-            stmt = con.prepareStatement(sql);
+            stmt = con.prepareStatement(SELECT_BOOKING_ID);
 
-			// Execute query
 			rs = stmt.executeQuery();
 			if (rs.next())
 				bookingId = rs.getInt("maxBookingId") + 1;
 			
-            String query = "INSERT INTO Booking VALUES (?,?,?,?,?,?,?)";
-            stmt = con.prepareStatement(query);
+            stmt = con.prepareStatement(INSERT_BOOKING);
             stmt.setInt(1, bookingId);
             stmt.setInt(2, custId);
             stmt.setInt(3, slotId);
@@ -371,8 +339,8 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-            String sql="Select customerId as custId from Customer where userId=?";
-            stmt=con.prepareStatement(sql);
+
+            stmt=con.prepareStatement(SELECT_CUSTOMERID_2);
             stmt.setInt(1,userId);
             rs=stmt.executeQuery();
             if(rs.next())
@@ -381,8 +349,7 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             }
             
             
-            sql="Select * from Booking where customerId=?";
-            stmt = con.prepareStatement(sql);
+            stmt = con.prepareStatement(SELECT_BOOKING_CUSTOMERID);
             stmt.setInt(1, custId);
             
             rs = stmt.executeQuery();
@@ -390,8 +357,7 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
               slotId=rs.getInt("slotId");
             }
             
-            sql="Select * from Slot where slotId=?";
-            stmt = con.prepareStatement(sql);
+            stmt = con.prepareStatement(SELECT_SLOTID);
             stmt.setInt(1, slotId);
             
             rs = stmt.executeQuery();
@@ -400,18 +366,14 @@ public class CustomerDaoImpl implements  CustomerDaoInterface {
             }
             currCap-=1;
            
-            // Update slot table
-            sql="UPDATE Slot SET slotCurrCap=?, slotStatus=? where slotId=?";
-            stmt = con.prepareStatement(sql);
+            stmt = con.prepareStatement(UPDATE_SLOT_3);
 			stmt.setInt(1, currCap);
 			stmt.setInt(2, 1);
 			stmt.setInt(3, slotId);
 			int rowsInserted =stmt.executeUpdate();
-//			System.out.println(rowsInserted + " record inserted");
+
             
-			
-            String query = "DELETE FROM Booking WHERE bookingId=?";
-            stmt = con.prepareStatement(query);
+            stmt = con.prepareStatement(DELETE_BOOKING);
             stmt.setInt(1, bookingId);
             int result = stmt.executeUpdate();
             if(result>0)

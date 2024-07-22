@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 import java.sql.*;
+import static com.flipkart.constant.SQLConstant.*;
 
 public class UserDaoImpl implements UserDaoInterface {
 	public int authenticateUser(String email, String password,int roleId)
@@ -11,9 +12,8 @@ public class UserDaoImpl implements UserDaoInterface {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            con = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-	            String query = "SELECT userPass, userId FROM User WHERE userEmail=? and roleId=?";
 	            
-	            stmt = con.prepareStatement(query);
+	            stmt = con.prepareStatement(SELECT_USER);
 	            stmt.setString(1, email);
 	            stmt.setInt(2, roleId);
 	            rs = stmt.executeQuery();
@@ -50,33 +50,28 @@ public class UserDaoImpl implements UserDaoInterface {
 		int userId = 0;
 
 		try {
-//			System.out.println("Inside addCenter");
+
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
 
-			String sql = "SELECT MAX(userId) AS maxUserId FROM User";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(SELECT_USERID_USER);
 
-			// Execute query
 			rs = pstmt.executeQuery();
 			if (rs.next())
 				userId = rs.getInt("maxUserId") + 1;
 			
-			sql = "INSERT INTO User VALUES (?,?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(INSERT_USER);
 			
-			// Set parameters for PreparedStatement
 			pstmt.setInt(1, userId);
 			pstmt.setString(2, email);
 			pstmt.setString(3, password);
 			pstmt.setString(4, name);
 			pstmt.setInt(5,roleId);
-			// Execute the insert statement
-				int rowsInserted = pstmt.executeUpdate();
-//				System.out.println(rowsInserted + " User record(s) inserted");
-				con.commit();
-				return userId;
+		
+			int rowsInserted = pstmt.executeUpdate();
+			con.commit();
+			return userId;
 		}
 	        catch (Exception e) {
 	            System.out.println("Error User: " + e.getMessage());

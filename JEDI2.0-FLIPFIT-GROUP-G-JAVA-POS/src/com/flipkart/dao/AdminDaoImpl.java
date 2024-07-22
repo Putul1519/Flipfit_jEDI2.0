@@ -1,5 +1,5 @@
 package com.flipkart.dao;
-
+import static com.flipkart.constant.SQLConstant.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,7 @@ public class AdminDaoImpl implements AdminDaoInterface {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-			String query = "SELECT * FROM centerOwner WHERE approvalStatus=0";
-			stmt = con.prepareStatement(query);
+			stmt = con.prepareStatement(VIEW_REQUEST);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -54,8 +53,7 @@ public class AdminDaoImpl implements AdminDaoInterface {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-			String query = "SELECT * FROM centerOwner WHERE approvalStatus=1";
-			stmt = con.prepareStatement(query);
+			stmt = con.prepareStatement(VIEW_CENTER_OWNER);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -87,9 +85,7 @@ public class AdminDaoImpl implements AdminDaoInterface {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-			String query = "UPDATE centerOwner SET approvalStatus=1 WHERE ownerId=?";
-
-			stmt = con.prepareStatement(query);
+			stmt = con.prepareStatement(VALIDATE_OWNER_REQUEST);
 			stmt.setInt(1, ownerId);
 			int rs = stmt.executeUpdate();
 
@@ -115,8 +111,8 @@ public class AdminDaoImpl implements AdminDaoInterface {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-			String query = "SELECT * FROM center";
-			stmt = con.prepareStatement(query);
+
+			stmt = con.prepareStatement(VIEW_CENTERS);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -146,24 +142,19 @@ public class AdminDaoImpl implements AdminDaoInterface {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
-
-			String deleteCentersQuery = "Delete from Booking where centerId in (Select centerId from Center where centerOwnerId=?)";
-			stmtDeleteCenters = con.prepareStatement(deleteCentersQuery);
+			stmtDeleteCenters = con.prepareStatement(DELETE_CENTER_OWNER_BOOKING);
 			stmtDeleteCenters.setInt(1, ownerId);
 			stmtDeleteCenters.executeUpdate();
 
-			deleteCentersQuery = "Delete from Slot where centerId in (Select centerId from Center where centerOwnerId=?)";
-			stmtDeleteCenters = con.prepareStatement(deleteCentersQuery);
+			stmtDeleteCenters = con.prepareStatement(DELETE_CENTER_OWNER_SLOT);
 			stmtDeleteCenters.setInt(1, ownerId);
 			stmtDeleteCenters.executeUpdate();
 			
-			deleteCentersQuery = "DELETE FROM center WHERE centerOwnerId =?";
-			stmtDeleteCenters = con.prepareStatement(deleteCentersQuery);
+			stmtDeleteCenters = con.prepareStatement(DELETE_CENTER_OWNER_CENTER);
 			stmtDeleteCenters.setInt(1, ownerId);
 			stmtDeleteCenters.executeUpdate();
 
-			String selectUserIdQuery = "SELECT userId FROM centerOwner WHERE ownerId =?";
-			PreparedStatement stmtSelectUserId = con.prepareStatement(selectUserIdQuery);
+			PreparedStatement stmtSelectUserId = con.prepareStatement(SELECT_USERID_OWNER);
 			stmtSelectUserId.setInt(1, ownerId);
 			ResultSet rs = stmtSelectUserId.executeQuery();
 
@@ -174,13 +165,11 @@ public class AdminDaoImpl implements AdminDaoInterface {
 			rs.close();
 			stmtSelectUserId.close();
 
-			String deleteCenterOwnerQuery = "DELETE FROM centerOwner WHERE ownerId = ?";
-			stmtDeleteCenterOwner = con.prepareStatement(deleteCenterOwnerQuery);
+			stmtDeleteCenterOwner = con.prepareStatement(DELETE_CENTER_OWNER);
 			stmtDeleteCenterOwner.setInt(1, ownerId);
 			stmtDeleteCenterOwner.executeUpdate();
 
-			String deleteUserQuery = "DELETE FROM user WHERE userId = ?";
-			stmtDeleteUser = con.prepareStatement(deleteUserQuery);
+			stmtDeleteUser = con.prepareStatement(DELETE_USER);
 			stmtDeleteUser.setInt(1, userId);
 			stmtDeleteUser.executeUpdate();
 

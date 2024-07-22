@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import static com.flipkart.constant.SQLConstant.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,32 +20,31 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 		int ownerId=1;
 
 		try {
-			System.out.println("Inside addCenter");
+
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
 
-			String sql = "SELECT MAX(ownerId) AS maxOwnerId FROM centerOwner";
-			pstmt = con.prepareStatement(sql);
 
-			// Execute query
+			pstmt = con.prepareStatement(SELECT_MAX_OWNERID);
+
+		
 			rs = pstmt.executeQuery();
 			if (rs.next())
 				ownerId = rs.getInt("maxOwnerId") + 1;
 			
-			sql = "INSERT INTO centerOwner VALUES (?,?,?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(INSERT_INTO_CENTER_OWNER);
 			
-			// Set parameters for PreparedStatement
 			pstmt.setInt(1, ownerId);
 			pstmt.setString(2, ownerGstNo);
 			pstmt.setInt(3, userId);
 			pstmt.setInt(4, 0);
 			pstmt.setString(5, aadharNo);
 			pstmt.setString(6, userPhoneNumber);
-			// Execute the insert statement
+			
 			int rowsInserted = pstmt.executeUpdate();
-//			System.out.println(rowsInserted + " Owner record inserted");
+			con.commit();
+ 		System.out.println(rowsInserted + " Owner record inserted");
 		}
 	        catch (Exception e) {
 	            System.out.println("Error: " + e.getMessage());
@@ -72,16 +72,14 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
 
-			String sql = "SELECT MAX(centerId) AS maxCenterId FROM Center";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(SELECT_MAX_CENTERID);
 
-			// Execute query
 			rs = pstmt.executeQuery();
 			if (rs.next())
 				centerId = rs.getInt("maxCenterId") + 1;
 			System.out.println(userId);
-			sql="Select ownerId as owner from centerOwner where userId=?";
-			pstmt=con.prepareStatement(sql);
+
+			pstmt=con.prepareStatement(SELECT_OWNERID_USER);
 			pstmt.setInt(1,userId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -89,26 +87,23 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 				ownerId=rs.getInt("owner");
 				System.out.println(ownerId);
 			}
-			// SQL statement to insert data into center table
-			sql = "INSERT INTO Center VALUES (?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
 			
-			// Set parameters for PreparedStatement
+			pstmt = con.prepareStatement(INSERT_INTO_CENTER);
+			
 			pstmt.setInt(1, centerId);
 			pstmt.setString(2, centerName);
 			pstmt.setString(3, centerLoc);
 			pstmt.setInt(4, ownerId);
-			// Execute the insert statement
+		
 			try {
 				System.out.println(pstmt);
 				int rowsInserted = pstmt.executeUpdate();
-//				System.out.println(rowsInserted + " center record(s) inserted");
+
 				
 			}
 			catch(Exception e){
 				System.out.println(e);
 			}
-			// Commit transaction
 			con.commit();
 		} catch (ClassNotFoundException | SQLException e) {
 			try {
@@ -143,13 +138,13 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
-		    String sql = "UPDATE Center SET centerName=?, centerLoc=? WHERE centerId=?";
-			pstmt = con.prepareStatement(sql);
+
+			pstmt = con.prepareStatement(UPDATE_CENTER);
 			pstmt.setString(1, centerName);
 			pstmt.setString(2, centerLoc);
 			pstmt.setInt(3, gymId);
 			int rowsInserted = pstmt.executeUpdate();
-//			System.out.println(rowsInserted + " center record(s) inserted");
+
 			con.commit();
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -188,8 +183,7 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
 			
-			String sql="Select ownerId as centerId from centerOwner where userId=?";
-			pstmt=con.prepareStatement(sql);
+			pstmt=con.prepareStatement(SELECT_OWNERID_USER_2);
 			pstmt.setInt(1,userId);
 			rs=pstmt.executeQuery();
 			
@@ -198,8 +192,7 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 				centerId=rs.getInt("centerId");
 			}
 
-			sql = "SELECT * FROM Center WHERE centerOwnerId = ?";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(SELECT_FROM_CENTER);
 			pstmt.setInt(1, centerId);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -241,16 +234,15 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
 
-			String sql = "SELECT MAX(centerId) AS maxCenterId FROM Center";
-			pstmt = con.prepareStatement(sql);
+
+			pstmt = con.prepareStatement(SELECT_MAX_CENTERID);
 			rs = pstmt.executeQuery();
 			if (rs.next())
 				slotId = rs.getInt("maxCenterId") + 1;
 			SimpleDateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
 			Date currDate=new Date();
-			
-			sql = "INSERT INTO Slot VALUES (?,?,?,?,?,?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
+
+			pstmt = con.prepareStatement(INSERT_SLOT);
 			
 			String slotDate=dateFormat.format(currDate);
 			pstmt.setInt(1, slotId);
@@ -265,7 +257,7 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			try {
 				System.out.println(pstmt);
 				int rowsInserted = pstmt.executeUpdate();
-//				System.out.println(rowsInserted + " Slot record inserted");
+
 			}
 			catch(Exception e){
 				System.out.println(e);
@@ -302,9 +294,7 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
-
-			String sql = "SELECT * FROM Slot WHERE centerId = ?";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(SELECT_SLOT);
 			pstmt.setInt(1, centerId);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -353,8 +343,7 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 			con.setAutoCommit(false);
 			
-			String sql="Select ownerId as ownerId from centerOwner where userId=?";
-			pstmt=con.prepareStatement(sql);
+			pstmt=con.prepareStatement(SELECT_OWNERID_OWNER);
 			pstmt.setInt(1,userId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -362,25 +351,20 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
 				ownerId=rs.getInt("ownerId");
 			}
 
-			sql = "UPDATE User SET userName=?, userEmail=? WHERE userId=(SELECT userId from centerOwner where ownerId=?)";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(UPDATE_USER);
 			pstmt.setString(1, name);
 			pstmt.setString(2, email);
 			pstmt.setInt(3, userId);
 			int rowsInserted = pstmt.executeUpdate();
-//			System.out.println(rowsInserted + " record inserted");
 			
-			
-			
-			sql="UPDATE centerOwner SET ownerGSTNo=?, aadharNo=?, contactNo=? WHERE ownerId=?";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(UPDATE_CENTER_OWNER);
      		pstmt.setString(1, gstnNo);
 			pstmt.setString(2, aadharNo);
 			pstmt.setString(3, contactNo);
 			pstmt.setInt(4, ownerId);
 			int rowsInserted2 = pstmt.executeUpdate();
 			con.commit();
-//			System.out.println(rowsInserted2 + " record inserted");
+
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
@@ -412,9 +396,7 @@ public class CenterOwnerDaoImpl implements CenterOwnerDaoInterface{
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/FlipFit", "root", "putul1519");
 
-
-            String bookingQuery = "SELECT * FROM Booking where centerId=?";
-            stmt = con.prepareStatement(bookingQuery);
+            stmt = con.prepareStatement(SELECT_BOOKING_CENTERID);
             stmt.setInt(1, gymId);
             rs = stmt.executeQuery();
             while (rs.next()) {

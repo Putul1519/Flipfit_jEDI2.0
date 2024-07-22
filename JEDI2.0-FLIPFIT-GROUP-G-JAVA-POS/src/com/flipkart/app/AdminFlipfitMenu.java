@@ -44,10 +44,10 @@ public class AdminFlipfitMenu {
 		do {
 			System.out.println("Admin Menu:"
 					+"\n1. View All Centers"
-					+ "\n2. View All Gym Owners"
+					+ "\n2. View All Center Owners"
 					+"\n3. View All Approval Requests"
-					+"\n4. Approve a Gym Owner Request"
-					+"\n5. Remove a GymOwner"
+					+"\n4. Approve a Center Owner Request"
+					+"\n5. Remove a Center Owner"
 					+"\n6. Exit");
 			
 			int choice=in.nextInt();
@@ -64,6 +64,7 @@ public class AdminFlipfitMenu {
 					System.out.print("\n Center Id: "+c.getCenterId());
 					System.out.print("\n Location of Center: "+c.getCenterLoc());
 					System.out.print("\n Center Owner Id: "+c.getCenterOwnerId());
+					System.out.println();
 				}
 			case 2:
 				List<CenterOwner> allGymOwners =new ArrayList<>();
@@ -71,6 +72,7 @@ public class AdminFlipfitMenu {
 				System.out.println("Details of All Gym Owners");
 				for(CenterOwner s: allGymOwners){
 					System.out.println("\nGym Owner ID: " + s.getOwnerId());
+					// print
 				}
 				break;
 				

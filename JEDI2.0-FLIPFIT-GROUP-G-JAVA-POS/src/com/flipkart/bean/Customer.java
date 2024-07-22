@@ -8,9 +8,9 @@ package com.flipkart.bean;
  */
 public class Customer {
 
-	private int customerId;         // Unique identifier for the customer
-	private String customerPhone;   // Phone number of the customer
-	private int userId;             // Identifier of the associated user
+	private int customerId;         
+	private String customerPhone;   
+	private int userId;             
 
 
 	public Customer(int customerId, String customerName, String customerPhone, String customerAddress, int userId) {

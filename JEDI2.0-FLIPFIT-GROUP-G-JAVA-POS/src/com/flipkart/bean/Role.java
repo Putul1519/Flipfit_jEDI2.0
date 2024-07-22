@@ -6,7 +6,7 @@ public class Role {
     private String roleDescription;
 
 
-//    constructor
+
     public Role(int roleId, String roleName, String roleDescription) {
         this.roleId = roleId;
         this.roleName = roleName;

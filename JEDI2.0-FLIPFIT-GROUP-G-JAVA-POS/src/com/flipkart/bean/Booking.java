@@ -8,8 +8,6 @@ public class Booking  {
 	private int transactionId;
 	private String bookingAmount;
 	private String bookingDate;
-	
-	//constructor
 	public Booking(int bookingId, int customerId, int centerId, int slotId, int transactionId, String bookingAmount,String bookingDate) {
         this.bookingId = bookingId;
         this.customerId = customerId;

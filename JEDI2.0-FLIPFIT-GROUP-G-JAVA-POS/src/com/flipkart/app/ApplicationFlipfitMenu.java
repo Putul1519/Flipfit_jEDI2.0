@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import com.flipkart.business.*;
 import com.flipkart.exception.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 
@@ -21,6 +23,7 @@ public class ApplicationFlipfitMenu {
 		switch (choice) {
 		case 1:
 			login();
+
 			break;
 		case 2:
 			registerAsCenterOwner();
@@ -60,6 +63,11 @@ public class ApplicationFlipfitMenu {
 			in.close();
 			return;
 		}
+		 LocalDateTime loginTime = LocalDateTime.now();	        
+	     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	     String formattedLoginTime = loginTime.format(formatter);
+	       
+	        System.out.println("Login Time: " + formattedLoginTime+"\n");
 		if (roleId == 2)
 			try {
 				GymOwnerFlipfitMenu.showCenterOwnerOptions(userId);
@@ -127,10 +135,10 @@ public class ApplicationFlipfitMenu {
 		String ownerGstNo = in.next();
 		System.out.println("Enter your aadhar number: ");
 		String aadharNo = in.next();
-		int userId = userService.createUser(userName, userEmail, userPassword, 3);
+		int userId = userService.createUser(userName, userEmail, userPassword,2);
 		if (userId > 0) {
 			ownerService.createOwner(userId, userPhoneNumber, ownerGstNo, aadharNo);
-			System.out.println("You have successfully registered as Customer");
+			System.out.println("You have successfully registered as Center Owner");
 			login();
 		}
 		in.close();

@@ -21,7 +21,6 @@ public class User {
        this.roleId = roleId;
     }
 
-//  getters and setters
     public String getUserId() {
        return userId;
     }

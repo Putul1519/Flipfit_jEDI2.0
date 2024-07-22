@@ -10,7 +10,7 @@ public class Payment {
     private int customerId;
 
 
-//  constructor
+
     public Payment(int transactionId, String upiId, String paymentDate, int customerId) {
     	this.transcationId = transactionId;
         this.upiId = upiId;
